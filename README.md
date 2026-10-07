@@ -1,8 +1,8 @@
-# thesis-vault-starter
+# thesis-notes-template
 
 給碩士生用的 Obsidian 論文筆記庫範本：五種筆記的模板、文獻筆記的填寫規則、一張文獻矩陣表，和五段可以直接貼給 AI 的提示詞。下載解壓縮，用 Obsidian 打開就能用。
 
-這個 repo 不放任何 AI 工具的設定檔。提示詞只是文字，網頁版的 ChatGPT、Claude 和終端機版的 Claude Code、Codex 都能用。
+這個 repo 不放任何 AI 工具的設定檔。提示詞只是文字，設計上不依賴特定 AI 工具。實測過的範圍：CLI 版第 2 段用 Claude Code 和 Codex 各跑過一次，第 3 段用 Claude Code 跑過一次；網頁版和其他三段還沒實測。
 
 ## 下載與開啟
 
@@ -37,7 +37,7 @@
 ## 第一週清單
 
 - [ ] Zotero 裝好 Better BibTeX，設好 citekey 公式（見下一節）
-- [ ] Zotero 的日期欄位一律填 `YYYY-MM-DD` 或只填 `YYYY`，不然 citekey 會缺年份
+- [ ] Zotero 的日期欄位統一格式（例如一律填 `YYYY-MM-DD` 或只填 `YYYY`）；格式不一致時，citekey 可能解析不出年份
 - [ ] 填 `術語表.md` 和 `研究設計速查.md`（可以用提示詞第 1 段請 AI 從計畫書填初稿）
 - [ ] 讀 `文獻筆記填寫規則.md`，寫第一份文獻筆記
 - [ ] 把整個資料夾放進有版本紀錄的雲端硬碟，另外每月手動備份一次
