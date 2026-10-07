@@ -1,0 +1,16 @@
+# Obsidian 個人狀態
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/plugins/
+.obsidian/community-plugins.json
+.obsidian/graph.json
+.obsidian/appearance.json
+.obsidian/hotkeys.json
+.trash/
+
+# 論文 PDF 與轉出的文字（大多有版權）
+_pdf/
+_附件/
+
+.DS_Store
+Thumbs.db

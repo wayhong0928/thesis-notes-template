@@ -1,0 +1,52 @@
+filters:
+  and:
+    - file.inFolder("03_文獻筆記")
+    - 'type == "paper"'
+formulas:
+  斷掉的連結: 'list(note["連結的概念筆記"]).filter(!value.asFile())'
+properties:
+  file.name:
+    displayName: citekey
+  note.paper_type:
+    displayName: 類型
+  note.method:
+    displayName: 方法
+  note.sample:
+    displayName: 樣本
+  note.theory:
+    displayName: 理論
+  note.連結的概念筆記:
+    displayName: 連結的概念筆記
+  formula.斷掉的連結:
+    displayName: 斷掉的連結
+  note.verified:
+    displayName: 最後核對
+  note.status:
+    displayName: 狀態
+views:
+  - type: table
+    name: 全部文獻
+    order:
+      - file.name
+      - year
+      - paper_type
+      - method
+      - sample
+      - theory
+      - 連結的概念筆記
+      - formula.斷掉的連結
+      - verified
+      - status
+    sort:
+      - property: year
+        direction: ASC
+  - type: table
+    name: 還沒核對
+    filters:
+      and:
+        - 'verified.isEmpty()'
+    order:
+      - file.name
+      - year
+      - paper_type
+      - status

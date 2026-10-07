@@ -1,0 +1,9 @@
+{
+  "types": {
+    "aliases": "aliases",
+    "tags": "tags",
+    "連結的概念筆記": "multitext",
+    "year": "number",
+    "verified": "date"
+  }
+}
