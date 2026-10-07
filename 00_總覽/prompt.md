@@ -1,13 +1,41 @@
-# 提示詞
+# Prompt
 
-五段提示詞，對應筆記庫的五個工作。每段都有兩個版本：
+第 0 段幫你裝工具、下載範本；第 1 到 5 段對應筆記庫的五個工作，每段都有兩個版本：
 
 - **網頁版**（ChatGPT、Claude 的網頁或 App）：一次處理一篇，PDF 自己上傳。建議開一個「專案」，把 `00_總覽/` 的 `文獻筆記填寫規則.md`、`術語表.md`、`研究設計速查.md` 和 `07_模板/` 的三份文獻筆記模板上傳成專案檔案，之後每個對話都讀得到。
 - **CLI 版**（Claude Code、Codex 這類在終端機跑的 AI）：在筆記庫資料夾開啟，AI 能直接讀寫檔案，可以一篇接一篇批次處理。
 
-CLI 版的 PDF 放法：在筆記庫根目錄建 `_pdf/` 資料夾，PDF 檔名改成 citekey（例：`Davis1989.pdf`）。`_pdf/` 不要放進公開的地方，論文 PDF 大多有版權。
+CLI 版直接讀 Zotero 裡的 PDF，不用另外複製或改名：AI 透過 Better BibTeX 用 citekey 查出 PDF 在哪裡。所以跑第 2、3 段時 Zotero 要開著。PDF 轉出的分頁文字檔放在 `_text/`，這個資料夾已經寫進 `.gitignore`，不要放到公開的地方，論文內容大多有版權。
 
 `⟨ ⟩` 裡的字換成你自己的內容。
+
+---
+
+## 0. 安裝與匯入（只有 CLI 版）
+
+**什麼時候用**：第一次使用，電腦上還沒有 Zotero、Obsidian 或這個範本。在任何資料夾開 Claude Code 或 Codex 都可以。
+
+```text
+請幫我在這台電腦裝好論文筆記庫要用的工具，並下載範本。每一步先說你要做什麼、要跑什麼指令，等我同意再做；已經裝好的就跳過。
+1. 判斷作業系統。Windows 用 winget，Mac 用 Homebrew（Mac 沒有 Homebrew 就先停下來告訴我）。
+2. 檢查並安裝：
+   - Zotero（winget：DigitalScholar.Zotero；brew：--cask zotero）
+   - Obsidian（winget：Obsidian.Obsidian；brew：--cask obsidian）
+   - Python 3（已經有 3.9 以上就跳過；winget：Python.Python.3.12；brew：python）
+3. 用 python -m pip install pymupdf 裝 PyMuPDF，裝完 import 一次確認。
+4. 問我範本要放在哪個資料夾，把 https://github.com/wayhong0928/thesis-notes-template 下載到那裡。有 git 就用 git clone，沒有就下載 main 分支的 ZIP 解壓縮。
+5. 查 https://api.github.com/repos/retorquere/zotero-better-bibtex/releases/latest ，把 .xpi 檔下載到我的「下載」資料夾。下載完核對檔案大小跟 GitHub 上列的一樣，不一樣就刪掉重新下載。告訴我檔案位置。
+6. 接下來要在畫面上點的步驟，一次只給我一步，我說「好了」再給下一步：
+   a. 開 Zotero，選「工具 → 外掛程式」，點右上角齒輪的「從檔案安裝外掛程式」，選第 5 步的 .xpi，裝完重開 Zotero。
+   b. 開 Zotero 的設定（Windows 在「編輯 → 設定」，Mac 在「Zotero → 設定」），到 Better BibTeX 的 Citation keys 分頁，把 Citation key formula 改成 auth.capitalize + year。
+   c. 在瀏覽器裝 Zotero Connector：https://www.zotero.org/download/connectors
+   d. 開 Obsidian，選「開啟資料夾作為儲存庫」，選第 4 步的範本資料夾。
+7. Zotero 開著的狀態下，用 Python 的 urllib 對 http://127.0.0.1:23119/better-bibtex/json-rpc 送 POST，內容是 {"jsonrpc":"2.0","method":"api.ready","params":[]}。回傳裡有 betterbibtex 的版本號，就代表 Better BibTeX 可以用了。
+8. 最後回報：哪些是這次裝的、哪些原本就有、哪一步失敗或被我跳過。
+不要修改 Zotero 或 Obsidian 的設定檔，設定都由我在畫面上操作。
+```
+
+**AI 回來後你要檢查**：在 Zotero 的文獻清單上按右鍵，選單裡有 Better BibTeX；Obsidian 左側看得到 `00_總覽` 到 `07_模板` 八個資料夾。接著讀 `00_總覽/開始使用.md`，再看 README 的「Zotero 怎麼接」，日期和中文作者姓名怎麼填寫在那裡。
 
 ---
 
@@ -66,19 +94,22 @@ CLI 版的 PDF 放法：在筆記庫根目錄建 `_pdf/` 資料夾，PDF 檔名�
 
 ```text
 你在一個 Obsidian 論文筆記庫的根目錄。請依序為下列 citekey 各寫一份文獻筆記：
-⟨citekey，一行一個⟩
+⟨citekey，一行一個；還沒決定寫哪幾篇就寫「先列給我挑」⟩
 
 先讀 00_總覽/文獻筆記填寫規則.md、00_總覽/術語表.md、00_總覽/研究設計速查.md。
+下面說的「送 JSON-RPC」，都是用 Python 的 urllib 對 http://127.0.0.1:23119/better-bibtex/json-rpc 送 POST（Content-Type: application/json）。Zotero 要開著；連不上就停下來告訴我。
+如果我寫的是「先列給我挑」：送 {"jsonrpc":"2.0","method":"item.search","params":[""]}，列出 03_文獻筆記/ 裡還沒有筆記的文獻（citekey、第一作者、年份、標題），等我挑完再開始。
 每一篇照這個流程：
-1. PDF 在 _pdf/{citekey}.pdf。如果 _pdf/{citekey}.txt 還不存在，用 Python 的 PyMuPDF（pip install pymupdf）把 PDF 轉成純文字，每頁開頭加一行「===== PDF p. N =====」（N 從 1 起算），存成 _pdf/{citekey}.txt。
-2. 讀完整份文字檔再動筆，不能只讀摘要和結論。表格在文字檔裡看不懂時，回去看那一頁 PDF。
-3. 依規則第一節選模板，照 07_模板/ 對應檔案的結構寫到 03_文獻筆記/{citekey}.md。{{title}} 換成論文標題，模板裡的 HTML 註解刪掉。
-4. 頁碼一律用文字檔的分頁標記數，標之前回文字檔確認那句話在哪一頁，不要憑大概位置標。
-5. 「對我的研究的用處」那一節（實證型第八節、理論型第九節，方法型是第六節「在本研究的用法」），以及實證型變項表的「對應本研究構念」欄，依研究設計速查寫成草稿，每句開頭標〔推論〕。
-6. 不要寫我研究的假說編號。verified 欄留空，要等另一個對話核對後才填。
-7. 照規則第六節自我核對。
+1. 送 {"jsonrpc":"2.0","method":"item.attachments","params":["{citekey}"]}，回傳裡副檔名是 .pdf 的 path 就是 Zotero 裡的 PDF。直接讀這個檔案，不要複製、搬移或改名。查不到 PDF、或有好幾個 PDF 不知道用哪個，就停下來問我。
+2. 如果 _text/{citekey}.txt 還不存在，用 Python 的 PyMuPDF 把 PDF 轉成純文字，每頁開頭加一行「===== PDF p. N =====」（N 從 1 起算），存成 _text/{citekey}.txt。
+3. 讀完整份文字檔再動筆，不能只讀摘要和結論。表格在文字檔裡看不懂時，回去看那一頁 PDF。
+4. 依規則第一節選模板，照 07_模板/ 對應檔案的結構寫到 03_文獻筆記/{citekey}.md。{{title}} 換成論文標題，模板裡的 HTML 註解刪掉。
+5. 頁碼一律用文字檔的分頁標記數，標之前回文字檔確認那句話在哪一頁，不要憑大概位置標。
+6. 「對我的研究的用處」那一節（實證型第八節、理論型第九節，方法型是第六節「在本研究的用法」），以及實證型變項表的「對應本研究構念」欄，依研究設計速查寫成草稿，每句開頭標〔推論〕。
+7. 不要寫我研究的假說編號。verified 欄留空，要等另一個對話核對後才填。
+8. 照規則第六節自我核對。
 處理完全部之後回報，每篇一段：用了哪一型模板、實際讀到的 PDF 頁碼範圍、填了 TBD 的欄位、你不確定的地方。
-只建立或修改 03_文獻筆記/ 和 _pdf/ 裡的檔案。不要用你記得的內容補原文沒寫的東西。
+只建立或修改 03_文獻筆記/ 和 _text/ 裡的檔案，Zotero 裡的檔案一律不動。不要用你記得的內容補原文沒寫的東西。
 ```
 
 **AI 回來後你要檢查**：頁碼範圍是不是涵蓋全文；〔推論〕的句子逐句自己改寫或刪掉，改完把〔推論〕拿掉；然後跑第 3 段核對。
@@ -107,7 +138,7 @@ CLI 版的 PDF 放法：在筆記庫根目錄建 `_pdf/` 資料夾，PDF 檔名�
 **CLI 版**：
 
 ```text
-請核對 03_文獻筆記/⟨citekey⟩.md，對照 _pdf/⟨citekey⟩.txt（PDF 轉出的文字，「===== PDF p. N =====」是分頁標記）。只做核對，不要修改任何檔案。
+請核對 03_文獻筆記/⟨citekey⟩.md，對照 _text/⟨citekey⟩.txt（PDF 轉出的文字，「===== PDF p. N =====」是分頁標記）。文字檔不存在、或要看表格原貌時，照 00_總覽/prompt.md 第 2 段 CLI 版的第 1、2 步找到 Zotero 裡的 PDF 原檔（Zotero 要開著），文字檔不存在就照同樣格式產生。只做核對，除了 _text/ 裡的文字檔，不要建立或修改任何檔案。
 先讀 00_總覽/文獻筆記填寫規則.md。逐條檢查，每條回報「通過／不通過」，不通過要寫出筆記原句、PDF 原句和頁碼。下面用的是實證型筆記的章節名稱；理論型、方法型就找對應的那一節，沒有對應的項目回報「不適用」。
 1. 抽 10 個數字回文字檔對，要一字不差（數字少於 10 個就全查）。
 2. 研究結果表的列數，是否等於原論文檢驗的假說或路徑數；速覽的成立數是否和表格一致。

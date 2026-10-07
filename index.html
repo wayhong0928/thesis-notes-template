@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>論文筆記庫範本</title>
+<meta name="description" content="給碩士生用的 Obsidian 論文筆記庫範本：五種筆記模板、文獻筆記填寫規則、文獻矩陣，以及可以貼給 AI 的安裝與工作 prompt。">
+<style>
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --text: #1d232b;
+  --muted: #5b6573;
+  --line: #dde2e8;
+  --accent: #2f5d8a;
+  --accent-soft: #e6eef6;
+  --code-bg: #eef1f4;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14181d;
+    --surface: #1c2229;
+    --text: #e4e8ed;
+    --muted: #9aa5b1;
+    --line: #2e3640;
+    --accent: #8fb6dd;
+    --accent-soft: #22303d;
+    --code-bg: #252c35;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14181d;
+  --surface: #1c2229;
+  --text: #e4e8ed;
+  --muted: #9aa5b1;
+  --line: #2e3640;
+  --accent: #8fb6dd;
+  --accent-soft: #22303d;
+  --code-bg: #252c35;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+}
+main { max-width: 860px; margin: 0 auto; padding: 40px 16px 64px; }
+h1 { font-size: 1.9rem; line-height: 1.3; margin: 0 0 12px; }
+h2 { font-size: 1.3rem; margin: 48px 0 12px; padding-top: 8px; border-top: 1px solid var(--line); }
+p { margin: 0 0 12px; }
+a { color: var(--accent); }
+code { background: var(--code-bg); padding: 1px 6px; border-radius: 4px; font-size: 0.92em; }
+.lead { color: var(--muted); font-size: 1.05rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 0; }
+.btn {
+  display: inline-block; padding: 8px 16px; border-radius: 6px;
+  border: 1px solid var(--accent); text-decoration: none; font-weight: 600;
+}
+.btn.primary { background: var(--accent); color: var(--bg); }
+.principle {
+  background: var(--accent-soft); border-left: 4px solid var(--accent);
+  padding: 12px 16px; border-radius: 4px; margin: 16px 0;
+}
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+.card h3 { margin: 0 0 4px; font-size: 1.05rem; }
+.card .folder { color: var(--muted); font-size: 0.9rem; }
+.card p { margin: 6px 0 0; font-size: 0.95rem; }
+ol.flow { list-style: none; counter-reset: step; padding: 0; margin: 0; }
+ol.flow li {
+  counter-increment: step; position: relative;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+  padding: 12px 16px 12px 56px; margin-bottom: 10px;
+}
+ol.flow li::before {
+  content: counter(step); position: absolute; left: 16px; top: 12px;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--accent); color: var(--bg);
+  font-weight: 700; font-size: 0.9rem; text-align: center; line-height: 26px;
+}
+ol.flow strong { display: block; }
+.prompt { color: var(--muted); font-size: 0.92rem; }
+table { width: 100%; border-collapse: collapse; background: var(--surface); font-size: 0.95rem; }
+th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+th { background: var(--accent-soft); }
+td:first-child { white-space: nowrap; }
+.table-wrap { overflow-x: auto; }
+ul { padding-left: 1.3em; }
+li { margin-bottom: 6px; }
+footer { margin-top: 56px; color: var(--muted); font-size: 0.9rem; }
+@media (max-width: 520px) {
+  h1 { font-size: 1.55rem; }
+  ol.flow li { padding-left: 50px; }
+}
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>論文筆記庫範本</h1>
+  <p class="lead">給碩士生用的 Obsidian 筆記庫。讀過的論文、研究的構念、假說的推導，分成五種筆記存放，寫第二章、第三章時直接從筆記取材。範本附了模板、填寫規則、一張文獻矩陣，以及可以直接貼給 AI 的 prompt。</p>
+  <div class="actions">
+    <a class="btn primary" href="https://github.com/wayhong0928/thesis-notes-template">到 GitHub 下載</a>
+    <a class="btn" href="https://github.com/wayhong0928/thesis-notes-template/blob/main/00_%E7%B8%BD%E8%A6%BD/prompt.md">看 prompt</a>
+    <a class="btn" href="https://wayhong0928.github.io/mis-thesis-guide/pages/thesis-notes-template.html">設計理由與完整說明</a>
+  </div>
+</header>
+
+<section>
+  <h2>它解決什麼問題</h2>
+  <p>文獻讀了幾十篇，筆記散在 PDF 劃線、Word 和腦袋裡；到了要寫文獻探討時，又得一篇一篇翻回去找「誰說過這個構念怎麼定義」。這個範本把筆記拆成五種，彼此用連結串起來：</p>
+  <div class="principle">讀的時候面對論文卡，寫的時候面對構念卡。</div>
+  <p>每讀一篇就寫一張論文卡，連到它談到的構念。要寫某個構念那一節時，打開構念卡，所有提過它的論文卡都列在反向連結裡。</p>
+</section>
+
+<section>
+  <h2>五種筆記</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>論文卡</h3>
+      <div class="folder"><code>03_文獻筆記</code>，一篇論文一張</div>
+      <p>分實證型、理論型、方法型三種模板。數字和定義附 PDF 頁碼，原文找不到就寫 TBD。</p>
+    </div>
+    <div class="card">
+      <h3>構念卡</h3>
+      <div class="folder"><code>02_變數</code>，一個構念一張</div>
+      <p>定義與構念邊界、各篇的共識與爭議、操作化與測量。第二章每一節從這裡寫。</p>
+    </div>
+    <div class="card">
+      <h3>推演卡</h3>
+      <div class="folder"><code>05_假設推演</code>，一條假說一張</div>
+      <p>用關係命名，例如 <code>知覺有用性→使用意圖</code>。寫清楚理論怎麼推、哪幾篇實證撐著。</p>
+    </div>
+    <div class="card">
+      <h3>理論卡</h3>
+      <div class="folder"><code>01_理論</code>，一個理論一張</div>
+      <p>核心預測與機制、邊界與競爭理論，以及在你的研究裡怎麼對應。</p>
+    </div>
+    <div class="card">
+      <h3>方法卡</h3>
+      <div class="folder"><code>06_方法</code>，一種方法或指標一張</div>
+      <p>例如 PLS-SEM、共同方法偏誤。第三章的分析步驟和門檻值從這裡來，每個門檻附出處與頁碼。</p>
+    </div>
+  </div>
+  <p style="margin-top:12px">另外兩份總表放在 <code>00_總覽</code>：<code>術語表.md</code> 固定每個構念的中文譯名，<code>研究設計速查.md</code> 放研究問題和假說表。整個筆記庫只有這張表和推演卡寫假說編號，假說改版時，論文卡一份都不用動。</p>
+</section>
+
+<section>
+  <h2>流程</h2>
+  <ol class="flow">
+    <li><strong>安裝與匯入</strong>裝好 Zotero、Better BibTeX、Obsidian，下載範本，用 Obsidian 開啟。<div class="prompt">Prompt 第 0 段：Claude Code 或 Codex 幫你裝，畫面上的設定一步一步帶你點。</div></li>
+    <li><strong>填兩份總表</strong>從計畫書整理出術語表和研究設計速查。<div class="prompt">Prompt 第 1 段：AI 從計畫書填初稿，前後不一致的地方列給你決定。</div></li>
+    <li><strong>找論文、寫論文卡</strong>看假說表哪條證據薄，帶著缺口去找文獻，存進 Zotero。讀完照填寫規則寫論文卡，檔名用 Zotero 的 citekey。<div class="prompt">Prompt 第 2 段：AI 用 citekey 找到 Zotero 裡的 PDF 直接讀，寫出筆記草稿。</div></li>
+    <li><strong>開新對話核對</strong>寫筆記的那個對話看不出自己的錯，換一個對話，最好換一個模型，逐條對回原文。<div class="prompt">Prompt 第 3 段：抽查數字、頁碼、構念有沒有被改名、用詞有沒有比研究設計更強。</div></li>
+    <li><strong>寫推演卡</strong>每條假說一張，看清楚每條箭頭要靠哪幾篇撐；證據不夠就回第 3 步。<div class="prompt">Prompt 第 5 段：檢查推導有沒有跳步、證據型態填得對不對。</div></li>
+    <li><strong>收料進構念卡</strong>打開構念卡，從反向連結把論文卡的材料整理成定義、共識、爭議。<div class="prompt">Prompt 第 4 段：AI 整理草稿，每句標出來自哪張論文卡。</div></li>
+    <li><strong>寫正文</strong>面對構念卡、推演卡、方法卡寫 <code>04_論文草稿</code>，不直接面對論文卡。參考文獻交給 Zotero 產生。</li>
+  </ol>
+</section>
+
+<section>
+  <h2>AI 在每一步做什麼、你做什麼</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>步驟</th><th>AI 做</th><th>你做</th></tr></thead>
+    <tbody>
+      <tr><td>寫論文卡</td><td>讀全文、填模板、每個數字標頁碼，對你研究的用處標成〔推論〕草稿</td><td>確認頁碼範圍涵蓋全文，〔推論〕的句子自己改寫或刪掉</td></tr>
+      <tr><td>核對</td><td>在新對話逐條對回原文，列出不通過的地方</td><td>不通過的地方自己回 PDF 再看一次，處理完填上 <code>verified</code> 日期</td></tr>
+      <tr><td>構念卡</td><td>從論文卡整理共識與爭議，每句附來源</td><td>抽 3 個來源回論文卡核對，「本研究的切入點」自己寫</td></tr>
+      <tr><td>推演卡</td><td>找推導跳步、檢查證據型態</td><td>補得起來的自己補，補不起來的帶去問老師</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="margin-top:12px">Prompt 都有網頁版（ChatGPT、Claude 的專案）和 CLI 版（Claude Code、Codex）兩種。範本本身不放任何 AI 工具的設定檔，不用 AI 也能照模板手寫。</p>
+</section>
+
+<section>
+  <h2>開始使用</h2>
+  <ul>
+    <li><strong>用 AI 安裝</strong>：在終端機開 Claude Code 或 Codex，貼上 <a href="https://github.com/wayhong0928/thesis-notes-template/blob/main/00_%E7%B8%BD%E8%A6%BD/prompt.md">prompt</a> 第 0 段。</li>
+    <li><strong>自己來</strong>：在 <a href="https://github.com/wayhong0928/thesis-notes-template">GitHub 頁面</a>按綠色 Code、Download ZIP，解壓縮後用 Obsidian「開啟資料夾作為儲存庫」，先讀 <code>00_總覽/開始使用.md</code>。</li>
+    <li>Zotero 的 citekey 公式、日期格式、中文作者姓名怎麼填，看 <a href="https://github.com/wayhong0928/thesis-notes-template#zotero-怎麼接">README 的「Zotero 怎麼接」</a>。</li>
+  </ul>
+  <p>範本裡的 <code>Davis1989</code>、<code>PU_知覺有用性</code>、<code>知覺有用性→使用意圖</code> 是一組填好的示範，彼此有連結，看懂後可以刪掉。</p>
+</section>
+
+<footer>
+  <p>MIT 授權。示範筆記引用的 Davis（1989）原文版權屬原出版者，筆記只摘錄定義與數字並附頁碼。研究方法與論文寫作的其他說明見 <a href="https://wayhong0928.github.io/mis-thesis-guide/">mis-thesis-guide</a>。</p>
+</footer>
+
+</main>
+</body>
+</html>
