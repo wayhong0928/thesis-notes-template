@@ -2,7 +2,7 @@
 
 給碩士生用的 Obsidian 論文筆記庫範本：五種筆記的模板、文獻筆記的填寫規則、一張文獻矩陣表，和五段可以直接貼給 AI 的 prompt。下載解壓縮，用 Obsidian 打開就能用。
 
-這個 repo 不放任何 AI 工具的設定檔。Prompt 只是文字，設計上不依賴特定 AI 工具。實測過的範圍：CLI 版第 2 段用 Claude Code 和 Codex 各跑過一次，第 3 段用 Claude Code 跑過一次；2026-10-07 改成直接讀 Zotero 裡的 PDF 之後，第 2 段的列清單、找 PDF、轉文字檔三步在 Windows 上用 Claude Code 和 Codex 各重跑過一次。第 3 段改成讀 Zotero 的 PDF 之後沒有重跑。第 0 段在工具都已裝好的 Windows 上用 Claude Code 跑過一次（由另一個 AI 扮演使用者，畫面上的步驟沒有真的點；第 5 步的核對檔案大小是測完才加的），從零安裝和 Mac 都還沒測；網頁版和其他三段還沒實測。
+Prompt 只是文字，不綁特定 AI 工具，repo 裡也沒有任何 AI 工具的設定檔。目前用 Claude Code 和 Codex 測過部分段落，網頁版、Mac 和從零安裝還沒測；哪幾段測過、怎麼測的，見 mis-thesis-guide [範本說明頁](https://wayhong0928.github.io/mis-thesis-guide/pages/thesis-notes-template.html)第七節。
 
 介紹頁：<https://wayhong0928.github.io/thesis-notes-template/>
 
@@ -44,7 +44,7 @@
 
 - [ ] Zotero 裝好 Better BibTeX，設好 citekey 公式（見下一節）
 - [ ] Zotero 的日期欄位統一格式（例如一律填 `YYYY-MM-DD` 或只填 `YYYY`）；格式不一致時，citekey 可能解析不出年份
-- [ ] 決定中文作者姓名用單欄還是兩欄，語言欄填 `zh-TW`（見下一節）
+- [ ] 決定中文作者姓名用單欄還是兩欄，語言欄填 `zh-TW`（見下一節最後的連結）
 - [ ] 填 `術語表.md` 和 `研究設計速查.md`（可以用 prompt 第 1 段請 AI 從計畫書填初稿）
 - [ ] 讀 `文獻筆記填寫規則.md`，寫第一份文獻筆記
 - [ ] 把整個資料夾放進有版本紀錄的雲端硬碟，另外每月手動備份一次
@@ -55,15 +55,9 @@
 
 - **citekey 公式**：Better BibTeX 的預設公式是 `auth.lower + shorttitle(3,3) + year`（作者姓氏＋標題前三個字＋年份）。範本的示範用的是較短的 `auth.capitalize + year`（產生 `Davis1989`），同作者同年份時 Better BibTeX 會自動加 a、b 字尾。兩種都可以，選定後就不要再換。改公式不會自動改掉既有的 key，要選取項目後手動 Refresh（[Better BibTeX 官方說明](https://retorque.re/zotero-better-bibtex/citing/)）。
 - **citekey 定了就不改**：筆記改名會讓連結斷掉。
-- **中文作者姓名**：Zotero 官方建議人名用兩欄（姓、名）。用 Zotero 的引用引擎 citeproc-js 跑 APA 7 樣式（作者是虛構的）：兩欄的中文名在參考文獻印全名「王小明」，內文引用卻只印姓「(王, 2022)」；切換成單欄後，內文印「(王小明, 2022)」。中文文獻的內文引用要寫全名（見 [mis-thesis-guide 的 APA 7 中文化慣例](https://wayhong0928.github.io/mis-thesis-guide/pages/style.html)），所以打算用 Zotero 的 Word 外掛插入引用的話，中文作者改用單欄（作者欄右邊的按鈕可以切換）。單欄的代價是 citekey 比兩欄長：用範本的公式，兩欄是姓的拼音加年份（王小明 → `Wang2022`），單欄是全名每個字的拼音加年份（`WangXiaoMing2022`）。這個形狀來自實際文獻庫的 key，名字是虛構的。引用都自己打的話，用兩欄就好。不管哪一種，Zotero 印出的標點都是英文半形，交稿前要自己改成中文標點。
-- **語言欄**：中文文獻填 `zh-TW`。Zotero 建議用 ISO 語言碼，並用這一欄判斷要不要套英文標題的大小寫規則（[官方說明](https://www.zotero.org/support/kb/item_types_and_fields)）。
 - **PDF 留在 Zotero 就好**：CLI 版的 prompt 會透過 Better BibTeX，用 citekey 查出 PDF 在 Zotero 存放區的位置直接讀，不用另外複製或改檔名。跑的時候 Zotero 要開著。
-- **外掛是選配**：範本不需要任何 Obsidian 外掛就能用。想從 Zotero 一鍵建立筆記或匯入 PDF 標註，可以考慮外掛，但先看維護狀況（2026-10 查）：
-  - Zotero Integration：最新版 3.2.1 停在 2024-08，原作者的 repo 已轉到 `community-archive` 組織。
-  - Citations：最新版 0.4.5 停在 2022-09。
-  - ZotLit：還在更新（2.1.4，2026-09），需要另外在 Zotero 裝它的 companion 外掛；授權是 AGPL-3.0。範本作者沒有實測過。
 
-更完整的 Zotero 設定（校外連線、Better BibTeX 安裝、Word 引用）見 [mis-thesis-guide 的文獻管理與知識庫頁](https://wayhong0928.github.io/mis-thesis-guide/pages/tools-knowledge.html)。
+中文作者姓名用單欄還是兩欄、語言欄怎麼填，見 mis-thesis-guide 文獻管理頁的[〈中文文獻：作者姓名與語言欄〉](https://wayhong0928.github.io/mis-thesis-guide/pages/tools-knowledge.html)（2.3.8）；校外連線、Better BibTeX 安裝、Word 引用也在同一頁。範本不需要任何 Obsidian 外掛，想用 Zotero 相關外掛的話，各外掛的維護狀況見[範本說明頁](https://wayhong0928.github.io/mis-thesis-guide/pages/thesis-notes-template.html)第二節。
 
 ## 寫作流程
 
@@ -73,6 +67,19 @@
 4. **收料進構念卡**：打開構念卡，從反向連結看有哪些論文卡提供了材料，整理成定義、共識、爭議。
 5. **寫進正文**：面對構念卡、推演卡、方法卡寫 `04_論文草稿`，不直接面對論文卡。
 6. **收尾**：Zotero 產生參考文獻；對照假說表，確認每條假說在第二章有文獻、在第三章有推導。
+
+## 回報問題
+
+模板或 prompt 有錯、照步驟做不出來，請到 [Issues](https://github.com/wayhong0928/thesis-notes-template/issues) 回報。
+
+## 同系列
+
+| 資源 | 適合誰 |
+|---|---|
+| [mis-thesis-guide](https://wayhong0928.github.io/mis-thesis-guide/) | 研究方法與論文寫作的知識庫，查觀念、查判準 |
+| [一小時上手](https://wayhong0928.github.io/mis-thesis-guide/pages/ai-quickstart.html) | 只用 ChatGPT、Claude、Gemini 網頁版，想在一小時內建好論文助手（另有 [Claude Code、Codex 版](https://wayhong0928.github.io/mis-thesis-guide/pages/ai-quickstart-agent.html)） |
+| [thesis-notes-template](https://github.com/wayhong0928/thesis-notes-template) | 想用 Obsidian 做文獻筆記，要現成的模板和填寫規則 |
+| [mis-thesis-skills](https://github.com/wayhong0928/mis-thesis-skills) | 用 Claude Code 或 Codex，想讓 AI 照固定判準檢查題目與寫作 |
 
 ## 授權
 
