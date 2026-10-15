@@ -66,6 +66,19 @@ Whether Chinese author names go in one field or two, and how to fill in the lang
 
 ## Writing workflow
 
+```mermaid
+flowchart LR
+  P["Paper note<br/>one per paper"] --> C["Construct note"]
+  P --> H["Derivation note<br/>one per hypothesis"]
+  T["Theory note"] --> W2["Chapter 2"]
+  C --> W2
+  H --> W2
+  H --> W3["Chapter 3"]
+  M["Method note"] --> W3
+```
+
+A derivation note feeds both chapters: the last paragraph of the matching theory section in chapter 2, and the research hypotheses in chapter 3.
+
 1. **Find papers**: check which hypotheses in `研究設計速查.md` have thin evidence and search with that gap in mind.
 2. **Read and take notes**: highlight the PDF in Zotero and write the paper note following the rules.
 3. **Derive hypotheses**: write the derivation note first to see which papers each arrow needs; if evidence is missing, go back to step 1.

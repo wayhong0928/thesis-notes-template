@@ -95,7 +95,36 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.9rem; }
   h1 { font-size: 1.55rem; }
   ol.flow li { padding-left: 50px; }
 }
+.diagram { display: flex; align-items: stretch; gap: 8px; margin: 20px 0 8px; }
+.diagram .col { flex: 1; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+.diagram .stage { display: inline-block; font-size: 0.8rem; font-weight: 700; color: var(--accent); border: 1px solid var(--accent); border-radius: 10px; padding: 0 8px; }
+.diagram h3 { margin: 6px 0 4px; font-size: 1.05rem; }
+.diagram p, .diagram ul { margin: 0; font-size: 0.93rem; }
+.diagram ul { padding-left: 1.1em; }
+.diagram li { margin-bottom: 2px; }
+.diagram .arrow { align-self: center; color: var(--accent); font-size: 1.4rem; font-weight: 700; }
+.note { color: var(--muted); font-size: 0.92rem; }
+@media (max-width: 640px) {
+  .diagram { flex-direction: column; }
+  .diagram .arrow { transform: rotate(90deg); }
+}
+.themebtn {
+  position: absolute; top: 12px; right: 12px; z-index: 10;
+  width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
+  border: 1px solid var(--line); background: var(--surface); color: var(--text);
+  font-size: 1rem; line-height: 1;
+}
+header h1 { padding-right: 44px; }
+@media print { .themebtn { display: none; } }
 </style>
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem("rm-theme");
+    if (t === "dark" || t === "light") { document.documentElement.setAttribute("data-theme", t); }
+  } catch (e) { /* 封鎖 localStorage 時照系統設定 */ }
+})();
+</script>
 </head>
 <body>
 <main>
@@ -146,6 +175,29 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.9rem; }
       <p>例如 PLS-SEM、共同方法偏誤。第三章的分析步驟和門檻值從這裡來，每個門檻附出處與頁碼。</p>
     </div>
   </div>
+  <figure class="diagram" aria-label="筆記從讀到寫的流向">
+    <div class="col">
+      <span class="stage">讀</span>
+      <h3>論文卡</h3>
+      <p>一篇論文一張，連到它談到的構念。</p>
+    </div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="col">
+      <span class="stage">整理</span>
+      <h3>構念卡、推演卡</h3>
+      <p>構念卡從反向連結收集論文卡的材料；推演卡寫一條假說怎麼推、靠哪幾篇撐著。理論卡、方法卡也在這一層。</p>
+    </div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="col">
+      <span class="stage">寫</span>
+      <h3><code>04_論文草稿</code></h3>
+      <ul>
+        <li>第二章：理論卡、構念卡</li>
+        <li>假說推導：推演卡</li>
+        <li>第三章：方法卡</li>
+      </ul>
+    </div>
+  </figure>
   <p style="margin-top:12px">另外兩份總表放在 <code>00_總覽</code>：<code>術語表.md</code> 固定每個構念的中文譯名，<code>研究設計速查.md</code> 放研究問題和假說表。整個筆記庫只有這張表和推演卡寫假說編號，假說改版時，論文卡一份都不用動。</p>
 </section>
 
@@ -193,5 +245,30 @@ footer { margin-top: 56px; color: var(--muted); font-size: 0.9rem; }
 </footer>
 
 </main>
+<button class="themebtn" type="button" aria-label="切換淺色／深色"></button>
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.querySelector(".themebtn");
+  var mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+  function isDark() {
+    var cur = root.getAttribute("data-theme");
+    return cur === "dark" || (!cur && mq !== null && mq.matches);
+  }
+  function paint() {
+    var dark = isDark();
+    btn.textContent = dark ? "☀" : "☾";
+    btn.title = dark ? "切換成淺色" : "切換成深色";
+  }
+  btn.addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("rm-theme", next); } catch (e) { /* 忽略 */ }
+    paint();
+  });
+  if (mq !== null && mq.addEventListener) { mq.addEventListener("change", paint); }
+  paint();
+})();
+</script>
 </body>
 </html>
