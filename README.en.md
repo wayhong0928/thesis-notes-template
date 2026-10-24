@@ -86,6 +86,16 @@ A derivation note feeds both chapters: the last paragraph of the matching theory
 5. **Write the thesis**: write `04_論文草稿` from construct, derivation, and method notes, not from paper notes directly.
 6. **Wrap up**: generate the reference list from Zotero; go through the hypothesis table and confirm each hypothesis has literature in chapter 2 and a derivation in chapter 3.
 
+## Updating
+
+Once your vault holds your own content, don't overwrite it with a whole new copy. Download the new version (unzip the ZIP into a separate folder, or clone it somewhere else) and copy only these three items into your vault, replacing the old ones:
+
+- the whole `07_模板/` folder
+- `00_總覽/文獻筆記填寫規則.md`
+- `00_總覽/prompt.md`
+
+Leave `00_總覽/術語表.md` and `00_總覽/研究設計速查.md` alone, since you have filled them in, and don't touch `01_理論` through `06_方法`, which hold your notes. If you changed any templates yourself, save a copy of those files before overwriting and add the changes you want to keep back afterwards. Existing notes don't need rewriting; add any missing fields following the new template.
+
 ## Reporting problems
 
 If a template or prompt is wrong, or the steps don't work, report it in [Issues](https://github.com/wayhong0928/thesis-notes-template/issues).
