@@ -37,6 +37,8 @@ views:
       - formula.斷掉的連結
       - verified
       - status
+      - 讀過摘要方法
+      - 讀完全文
     sort:
       - property: year
         direction: ASC

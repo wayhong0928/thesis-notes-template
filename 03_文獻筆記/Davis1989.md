@@ -18,6 +18,9 @@ task_context: 職場（辦公室電腦系統：電子郵件、檔案編輯器、
   - "[[PEOU_知覺易用性]]"
 verified:
 status: 🌿
+讀過摘要方法: false
+讀完全文: false
+zotero: zotero://select/items/@Davis1989
 tags:
   - 文獻矩陣
   - 示範
