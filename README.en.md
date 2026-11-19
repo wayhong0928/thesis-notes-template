@@ -33,6 +33,7 @@ Intro page (Chinese): <https://wayhong0928.github.io/thesis-notes-template/>
 01_理論/ (theories)  02_變數/ (variables)  03_文獻筆記/ (literature notes)
 04_論文草稿/ (thesis drafts)  05_假設推演/ (hypothesis derivations)  06_方法/ (methods)
 07_模板/                 Templates: theory, variable, three types of literature note, hypothesis derivation, method (7 in total)
+_tools/                  extract_text.py turns a PDF into text with page markers; crop_figure.py crops a figure out of a PDF page
 ```
 
 Folders `01` to `06` each have a `說明.md` (readme) with its file naming rules and usage. `Davis1989`, `PU_知覺有用性` (perceived usefulness), and `知覺有用性→使用意圖` (perceived usefulness → intention to use) are filled-in examples; delete them once you've got the idea.
@@ -88,9 +89,10 @@ A derivation note feeds both chapters: the last paragraph of the matching theory
 
 ## Updating
 
-Once your vault holds your own content, don't overwrite it with a whole new copy. Download the new version (unzip the ZIP into a separate folder, or clone it somewhere else) and copy only these three items into your vault, replacing the old ones:
+Once your vault holds your own content, don't overwrite it with a whole new copy. Download the new version (unzip the ZIP into a separate folder, or clone it somewhere else) and copy only these four items into your vault, replacing the old ones:
 
 - the whole `07_模板/` folder
+- the whole `_tools/` folder
 - `00_總覽/文獻筆記填寫規則.md`
 - `00_總覽/prompt.md`
 
